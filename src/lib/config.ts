@@ -19,9 +19,12 @@ export const config: Config = {
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildModeration,
+		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.DirectMessages,
-		GatewayIntentBits.GuildMembers
+		GatewayIntentBits.DirectMessageReactions,
+		GatewayIntentBits.DirectMessageTyping
 	],
+	partials: [Partials.Channel, Partials.Message, Partials.GuildMember, Partials.User],
 	cooldown_options: {
 		delay: Time.Second * 10,
 		filteredUsers: ['600707283097485322'],
@@ -31,7 +34,6 @@ export const config: Config = {
 		parse: ['users'],
 		repliedUser: false
 	},
-	partials: [Partials.GuildMember, Partials.Message, Partials.User, Partials.Channel, Partials.Reaction],
 	logger: {
 		level: LogLevel.Info
 	},
