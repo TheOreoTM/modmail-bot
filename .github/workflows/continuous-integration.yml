@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           script: |
             pm2 delete modmail-bot
-            cd /root/modmai-bot
+            cd /root/modmail-bot
             git pull
             yarn install
             yarn build
