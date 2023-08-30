@@ -83,6 +83,7 @@ export const config: Config = {
 };
 
 export const ClientConfig: ClientOptions = {
+	defaultPrefix: '+',
 	intents: config.intents,
 	partials: config.partials,
 	allowedMentions: config.mentions,
