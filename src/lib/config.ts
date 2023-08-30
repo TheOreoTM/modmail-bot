@@ -31,7 +31,7 @@ export const config: Config = {
 		parse: ['users'],
 		repliedUser: false
 	},
-	partials: [Partials.GuildMember, Partials.Message, Partials.User, Partials.Channel],
+	partials: [Partials.GuildMember, Partials.Message, Partials.User, Partials.Channel, Partials.Reaction],
 	logger: {
 		level: LogLevel.Info
 	},
@@ -82,11 +82,11 @@ export const config: Config = {
 
 export const ClientConfig: ClientOptions = {
 	intents: config.intents,
+	partials: config.partials,
 	allowedMentions: config.mentions,
 	caseInsensitiveCommands: true,
 	caseInsensitivePrefixes: true,
 	defaultCooldown: config.cooldown_options,
-	partials: config.partials,
 	logger: config.logger,
 	loadMessageCommandListeners: true,
 	typing: false,
