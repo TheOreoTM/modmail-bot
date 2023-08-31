@@ -12,6 +12,7 @@ export class UserEvent extends Listener {
 		const isModlogChannel = await modmailManager.isModlogChannel(message.channelId);
 
 		const shouldCreateChannel = !isModlogChannel;
+		console.log('🚀 ~ file: modmailCreate.ts:15 ~ UserEvent ~ overriderun ~ shouldCreateChannel:', shouldCreateChannel);
 
 		let direction: ModmailDirection = ModmailDirection.ToServer;
 		if (isModlogChannel) {
