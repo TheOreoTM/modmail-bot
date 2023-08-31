@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { AssistantEvents, ModmailColors, ModmailDirection } from '#constants';
-import { EmbedBuilder, Message } from 'discord.js';
+import { AttachmentBuilder, EmbedBuilder, Message } from 'discord.js';
 import { fetchUser } from '#lib/utils';
 import { ModmailTransmission } from '#lib/types';
 
@@ -27,7 +27,11 @@ export class UserEvent extends Listener {
 		if (message.attachments.size) {
 			let attachmentNum = 1;
 			message.attachments.forEach((attachment) => {
-				user.send({ embeds: [new EmbedBuilder().setThumbnail(attachment.proxyURL).setAuthor({ name: `Attachment ${attachmentNum}` })] });
+				const file = new AttachmentBuilder(attachment.url, { name: 'image.png' });
+
+				user.send({
+					files: [file]
+				});
 				attachmentNum++;
 			});
 		}
