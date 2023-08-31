@@ -1,8 +1,9 @@
 import { ModmailConfig } from '#lib/constants';
+import { ModmailData } from '#lib/types';
 import { fetchMainServer, fetchModmailCategory } from '#lib/utils';
 import { ModmailStatus } from '@prisma/client';
 import { UserError, container } from '@sapphire/framework';
-import { ChannelType, PermissionFlagsBits, User } from 'discord.js';
+import { ChannelType, PermissionFlagsBits, TextChannel, User } from 'discord.js';
 
 export class Modmail {
 	public async create({ userId, channelId }: { userId: string; channelId?: string }) {
@@ -95,8 +96,9 @@ export class Modmail {
 			}
 		});
 
-		if (modmailData) return modmailData;
-		throw new UserError({ message: 'Modmail doesnt exist', identifier: 'NoModmail' });
+		if (!modmailData) throw new UserError({ message: 'Modmail doesnt exist', identifier: 'NoModmail' });
+
+		return this.getChannel(modmailData.id);
 	}
 
 	public async getChannel(modmailId: number) {
@@ -116,17 +118,11 @@ export class Modmail {
 
 		if (!channel) throw new UserError({ message: 'Modmail channel doesnt exist', identifier: 'NoModmailChannel' });
 
-		return channel;
+		return channel as TextChannel;
 	}
 }
 
 type CreateChannelInput = {
 	user: User;
-	modmail: {
-		id: number;
-		userId: string;
-		status: ModmailStatus;
-		channelId: string | null;
-		createdAt: Date;
-	};
+	modmail: ModmailData;
 };

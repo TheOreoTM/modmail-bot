@@ -11,6 +11,20 @@ import { APIUser, CategoryChannel, Guild, GuildBasedChannel, User } from 'discor
 import { ModmailConfig } from '#constants';
 import { Nullish } from '@sapphire/utilities';
 
+export async function fetchUser(userId: string) {
+	return (
+		container.client.users.cache.get(userId) ??
+		(await container.client.users.fetch(userId, {
+			cache: true
+		}))
+	);
+}
+
+export async function fetchMember(memberId: string) {
+	const guild = await fetchMainServer();
+	return guild.members.cache.get(memberId) ?? (await guild.members.fetch(memberId));
+}
+
 export async function fetchMainServer() {
 	let guild: Guild | Nullish = container.client.guilds.cache.get(ModmailConfig.server);
 	guild ??= await container.client.guilds.fetch(ModmailConfig.server);

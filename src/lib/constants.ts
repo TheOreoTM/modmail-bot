@@ -16,7 +16,12 @@ export const AssistantEvents = {
 	ModmailSendMessage: 'modmailSendMessage'
 };
 
-export const enum ModmailDirection {
+export enum ModmailDirection {
 	ToServer = 'toServer',
 	ToUser = 'toUser'
+}
+
+export enum ModmailColors {
+	Receive = 0xe8b527,
+	Send = 0x4aab16
 }

@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { AssistantEvents, ModmailDirection } from '#constants';
+import { AssistantEvents, ModmailColors, ModmailDirection } from '#constants';
 import { EmbedBuilder, Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailSendMessage })
@@ -8,7 +8,7 @@ export class UserEvent extends Listener {
 	public override run(direction: ModmailDirection, firstTime: boolean, message: Message, channel: TextChannel) {
 		if (direction !== ModmailDirection.ToServer) return;
 
-		const embed = new EmbedBuilder();
+		const toServerEmbed = new EmbedBuilder();
 
 		if (firstTime) {
 			const embed = new EmbedBuilder();
@@ -20,11 +20,12 @@ export class UserEvent extends Listener {
 			channel.send({ embeds: [embed] });
 		}
 
-		embed
+		toServerEmbed
 			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL({ forceStatic: true }) })
-			.setDescription(message.content);
+			.setDescription(message.content)
+			.setColor(ModmailColors.Receive);
 
-		channel.send({ embeds: [embed] });
+		channel.send({ embeds: [toServerEmbed] });
 
 		if (message.attachments.size) {
 			message.attachments.forEach((attachment, index) => {
