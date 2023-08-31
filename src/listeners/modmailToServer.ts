@@ -31,8 +31,10 @@ export class UserEvent extends Listener {
 		channel.send({ embeds: [toServerEmbed] });
 
 		if (message.attachments.size) {
-			message.attachments.forEach((attachment, index) => {
-				channel.send({ embeds: [new EmbedBuilder().setThumbnail(attachment.proxyURL).setAuthor({ name: `Attachment #${index + 1}` })] });
+			let attachmentNum = 1;
+			message.attachments.forEach((attachment) => {
+				channel.send({ embeds: [new EmbedBuilder().setThumbnail(attachment.proxyURL).setAuthor({ name: `Attachment ${attachmentNum}` })] });
+				attachmentNum++;
 			});
 		}
 	}
