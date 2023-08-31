@@ -9,6 +9,13 @@ import { ModmailTransmission } from '#lib/types';
 export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const modmailManager = new Modmail();
+		const isModlogChannel = await modmailManager.isModlogChannel(message.channelId);
+
+		let direction: ModmailDirection = ModmailDirection.ToServer;
+		if (isModlogChannel) {
+			direction = ModmailDirection.ToUser;
+		}
+
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
 		if (!firstTime) {
 			const modmail = (await modmailManager.get(message.author.id))!;
@@ -18,7 +25,7 @@ export class UserEvent extends Listener {
 			});
 			const data: ModmailTransmission = {
 				channel,
-				direction: ModmailDirection.ToServer,
+				direction,
 				firstTime: firstTime,
 				modmail: modmail
 			};
@@ -35,7 +42,7 @@ export class UserEvent extends Listener {
 
 		const data: ModmailTransmission = {
 			channel,
-			direction: ModmailDirection.ToServer,
+			direction,
 			firstTime: firstTime,
 			modmail: modmail
 		};

@@ -61,6 +61,16 @@ export class Modmail {
 		return modmailData ? true : false;
 	}
 
+	public async isModlogChannel(channelId: string) {
+		const data = await container.db.modmail.findFirst({
+			where: {
+				channelId
+			}
+		});
+
+		return data ? true : false;
+	}
+
 	public async createChannel({ user, modmail }: CreateChannelInput) {
 		const guild = await fetchMainServer();
 		const category = await fetchModmailCategory();
