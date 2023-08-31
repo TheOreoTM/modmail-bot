@@ -8,7 +8,7 @@ import {
 } from '@sapphire/framework';
 import { cyan } from 'colorette';
 import { APIUser, CategoryChannel, Guild, GuildBasedChannel, User } from 'discord.js';
-import { ModmailConfig } from './constants';
+import { ModmailConfig } from '#constants';
 import { Nullish } from '@sapphire/utilities';
 
 export async function fetchMainServer() {

@@ -1,4 +1,4 @@
-import { ClientConfig } from './config';
+import { ClientConfig } from '#config';
 import { PrismaClient } from '@prisma/client';
 import { container, SapphireClient } from '@sapphire/framework';
 

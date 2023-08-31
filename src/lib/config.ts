@@ -2,7 +2,6 @@ process.env.NODE_ENV ??= 'development';
 
 import { Time } from '@sapphire/duration';
 import { BucketScope, type ClientLoggerOptions, type CooldownOptions, LogLevel } from '@sapphire/framework';
-import '@sapphire/plugin-scheduled-tasks/register';
 import {
 	type ClientOptions,
 	GatewayIntentBits,

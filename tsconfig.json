@@ -3,7 +3,15 @@
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist",
-		"tsBuildInfoFile": "dist/.tsbuildinfo"
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"paths": {
+			"#lib/*": ["./src/lib/*"],
+			"#root/*": ["./*"],
+			"#utils": ["./src/lib/utils.ts"],
+			"#constants": ["./src/lib/constants.ts"],
+			"#classes/*": ["./src/lib/classes/*"],
+			"#config": ["./src/lib/config.ts"]
+		}
 	},
 	"include": ["src"]
 }

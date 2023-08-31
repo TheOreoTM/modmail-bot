@@ -1,16 +1,7 @@
-import './lib/setup';
-import { LogLevel, SapphireClient } from '@sapphire/framework';
-import { GatewayIntentBits } from 'discord.js';
+import '#lib/setup';
+import { AssistantClient } from '#lib/AssistantClient';
 
-const client = new SapphireClient({
-	defaultPrefix: '!',
-	caseInsensitiveCommands: true,
-	logger: {
-		level: LogLevel.Debug
-	},
-	intents: [GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent],
-	loadMessageCommandListeners: true
-});
+const client = new AssistantClient();
 
 const main = async () => {
 	try {

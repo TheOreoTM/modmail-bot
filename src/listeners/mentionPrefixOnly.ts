@@ -1,6 +1,6 @@
 import { Listener } from '@sapphire/framework';
 import type { Message } from 'discord.js';
-import { AssistantEvents } from '../lib/constants';
+import { AssistantEvents } from '#constants';
 
 export class UserEvent extends Listener<typeof AssistantEvents.MentionPrefixOnly> {
 	public override async run(message: Message) {

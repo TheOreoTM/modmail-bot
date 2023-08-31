@@ -1,9 +1,9 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { AssistantEvents, ModmailConfig, ModmailDirection } from '../lib/constants';
+import { AssistantEvents, ModmailConfig, ModmailDirection } from '#constants';
 import { ChannelType, Message, PermissionFlagsBits } from 'discord.js';
-import { fetchMainServer, fetchModmailCategory } from '../lib/utils';
-import { Modmail } from '../lib/classes/Modmail';
+import { fetchMainServer, fetchModmailCategory } from '#utils';
+import { Modmail } from '#classes/Modmail';
 
 @ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailCreate })
 export class UserEvent extends Listener {

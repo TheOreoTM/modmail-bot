@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { AssistantEvents, ModmailDirection } from '../lib/constants';
+import { AssistantEvents, ModmailDirection } from '#constants';
 import { EmbedBuilder, Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailSendMessage })
