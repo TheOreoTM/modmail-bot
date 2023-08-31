@@ -24,9 +24,11 @@ export class UserEvent extends Listener {
 			toUserEmbed.setFooter({ text: 'Images sent with this message are below.' });
 		}
 
-		user.send({ embeds: [toUserEmbed] }).catch(async () => {
-			return channel.send(`❌ I cant DM the user. Do they have their DMs off?`);
-		});
+		message.content.length
+			? await channel.send({ embeds: [toUserEmbed] }).catch(() => {
+					return channel.send(`❌ I cant DM the user. Do they have their DMs off?`);
+			  })
+			: null;
 
 		if (message.attachments.size) {
 			let attachmentNum = 1;

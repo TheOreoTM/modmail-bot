@@ -31,7 +31,8 @@ export class UserEvent extends Listener {
 		if (message.attachments.size) {
 			toServerEmbed.setFooter({ text: 'Images sent with this message are below.' });
 		}
-		channel.send({ embeds: [toServerEmbed] });
+
+		message.content.length ? channel.send({ embeds: [toServerEmbed] }) : null;
 
 		if (message.attachments.size) {
 			let attachmentNum = 1;
