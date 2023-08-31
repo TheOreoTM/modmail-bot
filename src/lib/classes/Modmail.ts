@@ -18,14 +18,12 @@ export class Modmail {
 		return modmailData;
 	}
 
-	public async get({ userId, channelId }: GetModmailInput) {
+	public async get({ userId, channelId }: GetModmailInput, state: ModmailStatus = 'ONGOING') {
 		if (userId) {
 			return await container.db.modmail.findFirst({
 				where: {
 					userId,
-					status: {
-						in: [ModmailStatus.ONGOING, ModmailStatus.CLOSED]
-					}
+					status: state
 				}
 			});
 		}
