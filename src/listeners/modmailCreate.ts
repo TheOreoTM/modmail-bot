@@ -10,18 +10,16 @@ export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const modmailManager = new Modmail();
 		const isModlogChannel = await modmailManager.isModlogChannel(message.channelId);
-		console.log('🚀 ~ file: modmailCreate.ts:13 ~ UserEvent ~ overriderun ~ isModlogChannel:', isModlogChannel);
 
 		let direction: ModmailDirection = ModmailDirection.ToServer;
-		console.log('🚀 ~ file: modmailCreate.ts:16 ~ UserEvent ~ overriderun ~ direction:', direction);
 		if (isModlogChannel) {
 			direction = ModmailDirection.ToUser;
 		}
 
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
 		if (!firstTime) {
-			const modmail = (await modmailManager.get(message.author.id))!;
-			const channel = await modmailManager.getChannel((await modmailManager.get(message.author.id))!.id).catch(async () => {
+			const modmail = (await modmailManager.get({ channelId: message.channelId }))!;
+			const channel = await modmailManager.getChannel((await modmailManager.get({ userId: modmail.userId }))!.id).catch(async () => {
 				const channel = await modmailManager.createChannel({ user: message.author, modmail: modmail! });
 				return await modmailManager.setChannel(modmail.id, channel.id);
 			});

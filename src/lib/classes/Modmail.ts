@@ -18,18 +18,39 @@ export class Modmail {
 		return modmailData;
 	}
 
-	public async get(userId: string) {
-		const modmailData = await container.db.modmail.findFirst({
-			where: {
-				userId,
-				status: ModmailStatus.ONGOING
-			}
-		});
+	public async get({ userId, channelId }: GetModmailInput) {
+		if (userId) {
+			return await container.db.modmail.findFirst({
+				where: {
+					userId,
+					status: ModmailStatus.ONGOING
+				}
+			});
+		}
 
-		return modmailData;
+		if (channelId) {
+			return await container.db.modmail.findFirst({
+				where: {
+					channelId,
+					status: ModmailStatus.ONGOING
+				}
+			});
+		}
+
+		if (userId && channelId) {
+			return await container.db.modmail.findFirst({
+				where: {
+					channelId,
+					userId,
+					status: ModmailStatus.ONGOING
+				}
+			});
+		} else {
+			return null;
+		}
 	}
 
-	public async delete({ userId, modmailId }: { userId?: string; modmailId?: number }) {
+	public async delete({ userId, modmailId }: DeleteModmailInput) {
 		if (!userId && !modmailId) {
 			throw new Error(`Specify one argument for Modmail.delete() either userId or modmailId`);
 		}
@@ -56,7 +77,7 @@ export class Modmail {
 	}
 
 	public async existsFor(userId: string) {
-		const modmailData = await this.get(userId);
+		const modmailData = await this.get({ userId });
 
 		return modmailData ? true : false;
 	}
@@ -136,3 +157,7 @@ type CreateChannelInput = {
 	user: User;
 	modmail: ModmailData;
 };
+
+type DeleteModmailInput = { userId: string; modmailId?: number } | { userId?: string; modmailId: number };
+
+type GetModmailInput = { userId: string; channelId?: string } | { userId?: string; channelId: string };
