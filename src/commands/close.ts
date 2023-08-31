@@ -11,7 +11,9 @@ export class UserCommand extends Command {
 	public override async messageRun(message: Message) {
 		const modmailManager = new Modmail();
 		const isModmailChannel = modmailManager.isModlogChannel(message.channel.id);
+		console.log('🚀 ~ file: close.ts:14 ~ UserCommand ~ overridemessageRun ~ isModmailChannel:', isModmailChannel);
 		const isDM = isDMChannel(message.channel);
+		console.log('🚀 ~ file: close.ts:16 ~ UserCommand ~ overridemessageRun ~ isDM:', isDM);
 
 		const isModmail = isDM || isModmailChannel;
 
@@ -20,6 +22,7 @@ export class UserCommand extends Command {
 		}
 
 		const modmail = isDM ? modmailManager.get({ userId: message.channelId }) : modmailManager.get({ channelId: message.channel.id });
+		console.log('🚀 ~ file: close.ts:24 ~ UserCommand ~ overridemessageRun ~ modmail:', modmail);
 
 		message.channel.send({ content: `\`\`\`json\n${JSON.stringify(modmail, null, 2)}\`\`\`` });
 	}
