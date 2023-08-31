@@ -25,7 +25,7 @@ export class UserEvent extends Listener {
 
 		toServerEmbed
 			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL({ forceStatic: true }) })
-			.setDescription(message.content)
+			.setDescription(message.content.length ? message.content : 'Nothing...')
 			.setColor(ModmailColors.Receive);
 
 		if (message.attachments.size) {
