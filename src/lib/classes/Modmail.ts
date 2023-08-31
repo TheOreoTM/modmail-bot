@@ -25,6 +25,32 @@ export class Modmail {
 		return modmailData;
 	}
 
+	public async delete({ userId, modmailId }: { userId?: string; modmailId?: number }) {
+		if (!userId && !modmailId) {
+			throw new Error(`Specify one argument for Modmail.delete() either userId or modmailId`);
+		}
+
+		if (userId) {
+			await container.db.modmail
+				.deleteMany({
+					where: {
+						userId
+					}
+				})
+				.catch(null);
+		}
+
+		if (modmailId) {
+			await container.db.modmail
+				.delete({
+					where: {
+						id: modmailId
+					}
+				})
+				.catch(null);
+		}
+	}
+
 	public async existsFor(userId: string) {
 		const modmailData = await this.get(userId);
 

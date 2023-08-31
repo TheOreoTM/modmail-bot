@@ -11,7 +11,9 @@ export class UserEvent extends Listener {
 		const modmailManager = new Modmail();
 		let firstTime = false;
 		if (await modmailManager.existsFor(message.author.id)) {
-			const channel = await modmailManager.getChannel((await modmailManager.get(message.author.id))!.id);
+			const channel = await modmailManager.getChannel((await modmailManager.get(message.author.id))!.id).catch(() => {
+				modmailManager.delete({ userId: message.author.id });
+			});
 			return this.container.client.emit(AssistantEvents.ModmailSendMessage, ModmailDirection.ToServer, firstTime, message, channel);
 		}
 		firstTime = true;
