@@ -9,8 +9,9 @@ import { Modmail } from '#classes/Modmail';
 export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const modmailManager = new Modmail();
-		let firstTime = false;
-		if (await modmailManager.existsFor(message.author.id)) {
+		let firstTime = !(await modmailManager.existsFor(message.author.id));
+		console.log('🚀 ~ file: modmailCreate.ts:13 ~ UserEvent ~ overriderun ~ firstTime:', firstTime);
+		if (firstTime) {
 			const channel = await modmailManager.getChannel((await modmailManager.get(message.author.id))!.id).catch(() => {
 				modmailManager.delete({ userId: message.author.id });
 			});
