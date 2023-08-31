@@ -20,8 +20,9 @@ export class UserEvent extends Listener {
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
 		if (!firstTime) {
 			const modmail = isModlogChannel
-				? (await modmailManager.get({ userId: message.author.id }))!
-				: (await modmailManager.get({ channelId: message.channelId }))!;
+				? (await modmailManager.get({ channelId: message.channelId }))!
+				: (await modmailManager.get({ userId: message.author.id }))!;
+
 			const channel = await modmailManager.getChannel((await modmailManager.get({ userId: modmail.userId }))!.id).catch(async () => {
 				const channel = await modmailManager.createChannel({ user: message.author, modmail: modmail! });
 				return await modmailManager.setChannel(modmail.id, channel.id);
