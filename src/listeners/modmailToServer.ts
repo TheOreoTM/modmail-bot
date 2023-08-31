@@ -37,7 +37,6 @@ export class UserEvent extends Listener {
 		if (message.attachments.size) {
 			const attachmentEmbeds: EmbedBuilder[] = [];
 			const attachmentFiles: AttachmentBuilder[] = [];
-			let attachmentNum = 1;
 			message.attachments.forEach((attachment, index) => {
 				const file = new AttachmentBuilder(attachment.url, { name: `${index}.png` });
 
@@ -49,8 +48,6 @@ export class UserEvent extends Listener {
 				);
 
 				attachmentFiles.push(file);
-
-				attachmentNum++;
 			});
 
 			channel.send({ embeds: attachmentEmbeds, files: attachmentFiles });

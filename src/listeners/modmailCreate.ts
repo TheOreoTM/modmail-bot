@@ -10,7 +10,6 @@ export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const modmailManager = new Modmail();
 		const isModlogChannel = await modmailManager.isModlogChannel(message.channelId);
-		console.log('🚀 ~ file: modmailCreate.ts:13 ~ UserEvent ~ overriderun ~ isModlogChannel:', isModlogChannel);
 
 		let direction: ModmailDirection = ModmailDirection.ToServer;
 		if (isModlogChannel) {
