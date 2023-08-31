@@ -1,5 +1,8 @@
+import { ModmailConfig } from '#lib/constants';
+import { fetchMainServer, fetchModmailCategory } from '#lib/utils';
 import { ModmailStatus } from '@prisma/client';
 import { UserError, container } from '@sapphire/framework';
+import { ChannelType, PermissionFlagsBits, User } from 'discord.js';
 
 export class Modmail {
 	public async create({ userId, channelId }: { userId: string; channelId?: string }) {
@@ -57,6 +60,31 @@ export class Modmail {
 		return modmailData ? true : false;
 	}
 
+	public async createChannel({ user, modmail }: CreateChannelInput) {
+		const guild = await fetchMainServer();
+		const category = await fetchModmailCategory();
+
+		const channel = await guild.channels.create({
+			name: `${user.username}-${modmail.id.toString().padStart(4, '0')}`,
+			type: ChannelType.GuildText,
+			parent: category,
+			permissionOverwrites: [
+				{
+					id: guild.id,
+					deny: [PermissionFlagsBits.ViewChannel]
+				},
+				{
+					id: ModmailConfig.handlerRole,
+					allow: ['ViewChannel', 'SendMessages', 'AttachFiles']
+				}
+			],
+			position: 0,
+			topic: `Modmail for ${user.username} (\`${user.id}\`)`
+		});
+
+		return channel;
+	}
+
 	public async setChannel(modmailId: number, channelId: string) {
 		const modmailData = await container.db.modmail.update({
 			where: {
@@ -91,3 +119,14 @@ export class Modmail {
 		return channel;
 	}
 }
+
+type CreateChannelInput = {
+	user: User;
+	modmail: {
+		id: number;
+		userId: string;
+		status: ModmailStatus;
+		channelId: string | null;
+		createdAt: Date;
+	};
+};
