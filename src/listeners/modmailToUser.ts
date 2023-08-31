@@ -31,15 +31,24 @@ export class UserEvent extends Listener {
 			: null;
 
 		if (message.attachments.size) {
+			const attachmentEmbeds: EmbedBuilder[] = [];
+			const attachmentFiles: AttachmentBuilder[] = [];
 			let attachmentNum = 1;
-			message.attachments.forEach((attachment) => {
-				const file = new AttachmentBuilder(attachment.url, { name: 'image.png' });
+			message.attachments.forEach((attachment, index) => {
+				const file = new AttachmentBuilder(attachment.url, { name: `${index}.png` });
 
-				user.send({
-					files: [file]
-				});
+				attachmentEmbeds.push(
+					new EmbedBuilder()
+						.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL({ forceStatic: true }) })
+						.setImage(`attachment://${index}.png`)
+				);
+
+				attachmentFiles.push(file);
+
 				attachmentNum++;
 			});
+
+			user.send({ embeds: attachmentEmbeds, files: attachmentFiles });
 		}
 	}
 }
