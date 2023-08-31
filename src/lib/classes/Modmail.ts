@@ -23,7 +23,9 @@ export class Modmail {
 			return await container.db.modmail.findFirst({
 				where: {
 					userId,
-					status: ModmailStatus.ONGOING
+					status: {
+						in: [ModmailStatus.ONGOING, ModmailStatus.CLOSED]
+					}
 				}
 			});
 		}
