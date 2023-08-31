@@ -10,7 +10,7 @@ export class UserEvent extends Listener {
 		const modmailManager = new Modmail();
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
 		console.log('🚀 ~ file: modmailCreate.ts:13 ~ UserEvent ~ overriderun ~ firstTime:', firstTime);
-		if (firstTime) {
+		if (!firstTime) {
 			const channel = await modmailManager.getChannel((await modmailManager.get(message.author.id))!.id).catch(async () => {
 				const modmail = (await modmailManager.get(message.author.id))!;
 				const channel = await modmailManager.createChannel({ user: message.author, modmail: modmail! });
