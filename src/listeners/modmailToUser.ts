@@ -41,6 +41,7 @@ export class UserEvent extends Listener {
 					new EmbedBuilder()
 						.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL({ forceStatic: true }) })
 						.setImage(`attachment://${index}.png`)
+						.setColor(ModmailColors.Receive)
 				);
 
 				attachmentFiles.push(file);
