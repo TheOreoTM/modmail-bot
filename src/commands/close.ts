@@ -22,7 +22,9 @@ export class UserCommand extends Command {
 			return sendFailEmbed(message, 'This channel isnt a modmail channel');
 		}
 
-		const modmail = isDM ? await modmailManager.get({ userId: message.channelId }) : await modmailManager.get({ channelId: message.channel.id });
+		const modmail = isDM
+			? await modmailManager.get({ userId: message.channelId })
+			: await modmailManager.get({ channelId: message.channel.id }, 'CLOSED');
 
 		console.log(modmail);
 
