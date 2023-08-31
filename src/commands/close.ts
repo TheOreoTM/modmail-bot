@@ -1,29 +1,39 @@
 import { Modmail } from '#lib/classes/Modmail';
+import { fetchChannel, fetchUser, sendFailEmbed, sendStateEmbed } from '#lib/utils';
+import { ModmailStatus } from '@prisma/client';
 import { ApplyOptions } from '@sapphire/decorators';
 import { isDMChannel } from '@sapphire/discord.js-utilities';
 import { Command } from '@sapphire/framework';
-import type { Message } from 'discord.js';
+import { TextChannel, type Message } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
-	description: 'A basic command'
+	description: 'Close the modmail channel',
+	preconditions: ['StaffOnly']
 })
 export class UserCommand extends Command {
 	public override async messageRun(message: Message) {
 		const modmailManager = new Modmail();
 		const isModmailChannel = await modmailManager.isModlogChannel(message.channel.id);
-		console.log('🚀 ~ file: close.ts:14 ~ UserCommand ~ overridemessageRun ~ isModmailChannel:', isModmailChannel);
 		const isDM = isDMChannel(message.channel);
-		console.log('🚀 ~ file: close.ts:16 ~ UserCommand ~ overridemessageRun ~ isDM:', isDM);
 
 		const isModmail = isDM || isModmailChannel;
 
 		if (!isModmail) {
-			return;
+			return sendFailEmbed(message, 'This channel isnt a modmail channel');
 		}
 
 		const modmail = isDM ? await modmailManager.get({ userId: message.channelId }) : await modmailManager.get({ channelId: message.channel.id });
-		console.log('🚀 ~ file: close.ts:24 ~ UserCommand ~ overridemessageRun ~ modmail:', modmail);
 
-		message.channel.send({ content: `\`\`\`json\n${JSON.stringify(modmail, null, 2)}\`\`\`` });
+		if (!modmail || !modmail.channelId) {
+			return sendFailEmbed(message, 'I cant find this modmail in the database');
+		}
+
+		const user = await fetchUser(modmail.userId);
+		const channel = (await fetchChannel(modmail.channelId)) as TextChannel;
+
+		modmailManager.setState(modmail.id, ModmailStatus.CLOSED).then(async () => {
+			await sendStateEmbed(user, modmail);
+			await sendStateEmbed(channel, modmail);
+		});
 	}
 }

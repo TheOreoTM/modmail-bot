@@ -7,9 +7,40 @@ import {
 	UserError
 } from '@sapphire/framework';
 import { cyan } from 'colorette';
-import { APIUser, CategoryChannel, Guild, GuildBasedChannel, User } from 'discord.js';
-import { ModmailConfig } from '#constants';
+import { APIUser, CategoryChannel, EmbedBuilder, Guild, GuildBasedChannel, Message, TextChannel, User } from 'discord.js';
+import { AssistantColors, AssistantEmojis, ModmailConfig, ModmailStateEmojis } from '#constants';
 import { Nullish } from '@sapphire/utilities';
+import { ModmailData } from './types';
+import { ModmailStatus } from '@prisma/client';
+
+export async function sendStateEmbed(target: TextChannel | User, modmail: ModmailData) {
+	const state: ModmailStatus = modmail.status;
+
+	target.send({
+		embeds: [
+			new EmbedBuilder()
+				.setColor(AssistantColors.Info)
+				.setDescription(`${ModmailStateEmojis[state]} This modmail has been marked as \`${state.toLowerCase()}\``)
+		]
+	});
+}
+
+export async function sendFailEmbed(message: Message, description: string) {
+	message.channel.send({ embeds: [new EmbedBuilder().setDescription(`${AssistantEmojis.Fail} ${description}`).setColor(AssistantColors.Fail)] });
+}
+
+export async function sendSuccessEmbed(message: Message, description: string) {
+	message.channel.send({ embeds: [new EmbedBuilder().setDescription(`${AssistantEmojis.Fail} ${description}`).setColor(AssistantColors.Success)] });
+}
+
+export async function fetchChannel(channelId: string) {
+	return (
+		container.client.channels.cache.get(channelId) ??
+		(await container.client.channels.fetch(channelId, {
+			cache: true
+		}))
+	);
+}
 
 export async function fetchUser(userId: string) {
 	return (

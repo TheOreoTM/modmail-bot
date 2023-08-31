@@ -76,6 +76,17 @@ export class Modmail {
 		}
 	}
 
+	public async setState(modmailId: number, state: ModmailStatus) {
+		return await container.db.modmail.update({
+			where: {
+				id: modmailId
+			},
+			data: {
+				status: state
+			}
+		});
+	}
+
 	public async existsFor(userId: string) {
 		const modmailData = await this.get({ userId });
 
