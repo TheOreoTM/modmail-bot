@@ -95,8 +95,7 @@ export const ClientConfig: ClientOptions = {
 	shards: 'auto',
 	disableMentionPrefix: false,
 	preventFailedToFetchLogForGuilds: true,
-	sweepers: config.sweepers,
-	presence: config.presence
+	sweepers: config.sweepers
 };
 
 interface Config {
