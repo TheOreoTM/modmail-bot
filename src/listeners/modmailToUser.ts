@@ -20,6 +20,10 @@ export class UserEvent extends Listener {
 			.setDescription(message.content)
 			.setColor(ModmailColors.Receive);
 
+		if (message.attachments.size) {
+			toUserEmbed.setFooter({ text: 'Images sent with this message are below.' });
+		}
+
 		user.send({ embeds: [toUserEmbed] }).catch(async () => {
 			return channel.send(`❌ I cant DM the user. Do they have their DMs off?`);
 		});

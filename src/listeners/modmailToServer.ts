@@ -28,6 +28,9 @@ export class UserEvent extends Listener {
 			.setDescription(message.content)
 			.setColor(ModmailColors.Receive);
 
+		if (message.attachments.size) {
+			toServerEmbed.setFooter({ text: 'Images sent with this message are below.' });
+		}
 		channel.send({ embeds: [toServerEmbed] });
 
 		if (message.attachments.size) {
