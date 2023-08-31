@@ -25,7 +25,7 @@ export class UserEvent extends Listener {
 		}
 
 		message.content.length
-			? await channel.send({ embeds: [toUserEmbed] }).catch(() => {
+			? await user.send({ embeds: [toUserEmbed] }).catch(() => {
 					return channel.send(`❌ I cant DM the user. Do they have their DMs off?`);
 			  })
 			: null;
