@@ -1,11 +1,14 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { AssistantEvents, ModmailColors, ModmailDirection } from '#constants';
-import { EmbedBuilder, Message, TextChannel } from 'discord.js';
+import { EmbedBuilder, Message } from 'discord.js';
+import { ModmailTransmission } from '#lib/types';
 
 @ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailSendMessage })
 export class UserEvent extends Listener {
-	public override run(direction: ModmailDirection, firstTime: boolean, message: Message, channel: TextChannel) {
+	public override run(message: Message, data: ModmailTransmission) {
+		const { direction, firstTime, channel } = data;
+
 		if (direction !== ModmailDirection.ToServer) return;
 
 		const toServerEmbed = new EmbedBuilder();

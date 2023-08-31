@@ -80,7 +80,7 @@ export class Modmail {
 				}
 			],
 			position: 0,
-			topic: `Modmail for ${user.username} (\`${user.id}\`)`
+			topic: `Modmail for ${user.username} (${user.id})`
 		});
 
 		return channel;
