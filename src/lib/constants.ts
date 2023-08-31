@@ -4,6 +4,8 @@ import { join } from 'path';
 export const rootDir = join(__dirname, '..', '..');
 export const srcDir = join(rootDir, 'src');
 
+export const BotPrefix = '!';
+
 export const ModmailConfig = {
 	server: '1138806085352951950',
 	category: '1138806085805940775',

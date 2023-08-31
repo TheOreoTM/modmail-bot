@@ -11,6 +11,7 @@ import {
 	type SweeperOptions,
 	ActivityType
 } from 'discord.js';
+import { BotPrefix } from './constants';
 
 export const config: Config = {
 	intents: [
@@ -82,7 +83,7 @@ export const config: Config = {
 };
 
 export const ClientConfig: ClientOptions = {
-	defaultPrefix: '+',
+	defaultPrefix: BotPrefix,
 	intents: config.intents,
 	partials: config.partials,
 	allowedMentions: config.mentions,
