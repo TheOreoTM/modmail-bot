@@ -28,7 +28,7 @@ export class UserEvent extends Listener {
 				firstTime: false,
 				modmail: (await modmailManager.get({ channelId: message.channelId }))!
 			};
-			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, data);
+			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
 		}
 
 		if (!firstTime) {
