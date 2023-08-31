@@ -4,7 +4,7 @@ import { AssistantEvents, ModmailColors, ModmailDirection } from '#constants';
 import { AttachmentBuilder, EmbedBuilder, Message } from 'discord.js';
 import { ModmailTransmission } from '#lib/types';
 
-@ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailSendMessage })
+@ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailMessageCreate })
 export class UserEvent extends Listener {
 	public override run(message: Message, data: ModmailTransmission) {
 		const { direction, firstTime, channel } = data;

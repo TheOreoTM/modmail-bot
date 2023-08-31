@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { AssistantEvents, ModmailDirection } from '#constants';
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Modmail } from '#classes/Modmail';
 import { ModmailTransmission } from '#lib/types';
 
@@ -11,12 +11,25 @@ export class UserEvent extends Listener {
 		const modmailManager = new Modmail();
 		const isModlogChannel = await modmailManager.isModlogChannel(message.channelId);
 
+		const shouldCreateChannel = !isModlogChannel;
+
 		let direction: ModmailDirection = ModmailDirection.ToServer;
 		if (isModlogChannel) {
 			direction = ModmailDirection.ToUser;
 		}
 
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
+
+		if (shouldCreateChannel) {
+			const data: ModmailTransmission = {
+				channel: message.channel as TextChannel,
+				direction: ModmailDirection.ToUser,
+				firstTime: false,
+				modmail: (await modmailManager.get({ channelId: message.channelId }))!
+			};
+			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, data);
+		}
+
 		if (!firstTime) {
 			const modmail = isModlogChannel
 				? (await modmailManager.get({ channelId: message.channelId }))!

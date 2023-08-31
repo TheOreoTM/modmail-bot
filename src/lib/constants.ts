@@ -15,7 +15,8 @@ export const ModmailConfig = {
 export const AssistantEvents = {
 	...Events,
 	ModmailCreate: 'modmailCreate',
-	ModmailSendMessage: 'modmailSendMessage'
+	ModmailSendMessage: 'modmailSendMessage',
+	ModmailMessageCreate: 'modmailMessageCreate'
 };
 
 export enum ModmailDirection {
@@ -42,9 +43,9 @@ export const ModmailColors = {
 };
 
 export const ModmailStateEmojis = {
-	ONGOING: '<:online:1146736514118725673> ',
-	CLOSED: '<:invis:1146736627151011943> ',
-	DELETED: '<:dnd:1146736537673941012>'
+	ONGOING: '<:online:1146736514118725673>',
+	DELETED: '<:invis:1146736627151011943>',
+	CLOSED: '<:dnd:1146736537673941012>'
 } as const;
 
 export const AssistantEmojis = {
