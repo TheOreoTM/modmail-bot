@@ -9,12 +9,6 @@ import { Modmail } from '#lib/classes/Modmail';
 export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const isModlogChannel = await new Modmail().isModlogChannel(message.channelId);
-		console.log(
-			'🚀 ~ file: filterDms.ts:13 ~ UserEvent ~ overriderun ~ !isDMChannel(message.channel) || !isModlogChannel:',
-			!isDMChannel(message.channel) || !isModlogChannel
-		);
-		if (!isDMChannel(message.channel) || !isModlogChannel) return;
-
-		return this.container.client.emit(AssistantEvents.ModmailCreate, message);
+		if (!isDMChannel(message.channel) && !isModlogChannel) return;
 	}
 }
