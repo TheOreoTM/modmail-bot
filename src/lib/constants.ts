@@ -23,11 +23,6 @@ export enum ModmailDirection {
 	ToUser = 'toUser'
 }
 
-export const ModmailColors = {
-	Receive: 0xe8b527,
-	Send: 0x4aab16
-};
-
 export const AssistantColors = {
 	Success: 0x46b485,
 	Fail: 0xf05050,
@@ -35,6 +30,15 @@ export const AssistantColors = {
 	Info: 0x297bd1,
 	Loading: 0x23272a,
 	Default: 0x2b2d31
+};
+
+export const ModmailColors = {
+	Receive: 0xe8b527,
+	Send: 0x4aab16,
+
+	ONGOING: 0x43b581,
+	CLOSED: 0xef4747,
+	DELETED: 0x747f8e
 };
 
 export const ModmailStateEmojis = {

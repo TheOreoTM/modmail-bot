@@ -8,7 +8,7 @@ import {
 } from '@sapphire/framework';
 import { cyan } from 'colorette';
 import { APIUser, CategoryChannel, EmbedBuilder, Guild, GuildBasedChannel, Message, TextChannel, User } from 'discord.js';
-import { AssistantColors, AssistantEmojis, ModmailConfig, ModmailStateEmojis } from '#constants';
+import { AssistantColors, AssistantEmojis, ModmailColors, ModmailConfig, ModmailStateEmojis } from '#constants';
 import { Nullish } from '@sapphire/utilities';
 import { ModmailStatus } from '@prisma/client';
 
@@ -16,7 +16,7 @@ export async function sendStateEmbed(target: TextChannel | User, state: ModmailS
 	target.send({
 		embeds: [
 			new EmbedBuilder()
-				.setColor(AssistantColors.Info)
+				.setColor(ModmailColors[state])
 				.setDescription(`${ModmailStateEmojis[state]} This modmail has been marked as \`${state.toLowerCase()}\``)
 		]
 	});
