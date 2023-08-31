@@ -3,8 +3,7 @@ import { Command } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
-	description: 'A basic command',
-	runIn: ['DM']
+	description: 'A basic command'
 })
 export class UserCommand extends Command {
 	public override async messageRun(message: Message) {
