@@ -32,8 +32,8 @@ export class UserCommand extends Command {
 		const channel = (await fetchChannel(modmail.channelId)) as TextChannel;
 
 		modmailManager.setState(modmail.id, ModmailStatus.CLOSED).then(async () => {
-			await sendStateEmbed(user, modmail);
-			await sendStateEmbed(channel, modmail);
+			await sendStateEmbed(user, ModmailStatus.CLOSED);
+			await sendStateEmbed(channel, ModmailStatus.CLOSED);
 		});
 	}
 }

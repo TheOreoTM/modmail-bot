@@ -10,12 +10,9 @@ import { cyan } from 'colorette';
 import { APIUser, CategoryChannel, EmbedBuilder, Guild, GuildBasedChannel, Message, TextChannel, User } from 'discord.js';
 import { AssistantColors, AssistantEmojis, ModmailConfig, ModmailStateEmojis } from '#constants';
 import { Nullish } from '@sapphire/utilities';
-import { ModmailData } from './types';
 import { ModmailStatus } from '@prisma/client';
 
-export async function sendStateEmbed(target: TextChannel | User, modmail: ModmailData) {
-	const state: ModmailStatus = modmail.status;
-
+export async function sendStateEmbed(target: TextChannel | User, state: ModmailStatus) {
 	target.send({
 		embeds: [
 			new EmbedBuilder()
