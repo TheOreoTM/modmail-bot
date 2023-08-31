@@ -10,7 +10,7 @@ import type { Message } from 'discord.js';
 export class UserCommand extends Command {
 	public override async messageRun(message: Message) {
 		const modmailManager = new Modmail();
-		const isModmailChannel = modmailManager.isModlogChannel(message.channel.id);
+		const isModmailChannel = await modmailManager.isModlogChannel(message.channel.id);
 		console.log('🚀 ~ file: close.ts:14 ~ UserCommand ~ overridemessageRun ~ isModmailChannel:', isModmailChannel);
 		const isDM = isDMChannel(message.channel);
 		console.log('🚀 ~ file: close.ts:16 ~ UserCommand ~ overridemessageRun ~ isDM:', isDM);
@@ -21,7 +21,7 @@ export class UserCommand extends Command {
 			return;
 		}
 
-		const modmail = isDM ? modmailManager.get({ userId: message.channelId }) : modmailManager.get({ channelId: message.channel.id });
+		const modmail = isDM ? await modmailManager.get({ userId: message.channelId }) : await modmailManager.get({ channelId: message.channel.id });
 		console.log('🚀 ~ file: close.ts:24 ~ UserCommand ~ overridemessageRun ~ modmail:', modmail);
 
 		message.channel.send({ content: `\`\`\`json\n${JSON.stringify(modmail, null, 2)}\`\`\`` });
