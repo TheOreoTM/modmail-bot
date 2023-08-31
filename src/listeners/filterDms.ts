@@ -9,7 +9,8 @@ import { Modmail } from '#lib/classes/Modmail';
 export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const isModlogChannel = await new Modmail().isModlogChannel(message.channelId);
-		console.log(!isDMChannel(message.channel) && !isModlogChannel);
 		if (!isDMChannel(message.channel) && !isModlogChannel) return;
+
+		return this.container.client.emit(AssistantEvents.ModmailCreate, message);
 	}
 }
