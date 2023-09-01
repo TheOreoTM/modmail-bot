@@ -20,13 +20,13 @@ export class UserEvent extends Listener {
 			const channel = await ModmailManager.createChannel({ user: user, modmail: modmail });
 			await ModmailManager.setChannel(modmail.id, channel.id);
 
-			const baseModmailEmbed = new EmbedBuilder().setTitle('Modmail Started').setColor(ModmailColors.ONGOING);
-
-			const userModmailEmbed = baseModmailEmbed //
+			const userModmailEmbed = new EmbedBuilder() //
+				.setTitle('Modmail Started')
 				.setDescription('Your message has been sent. Please wait patiently for a staff member to respond.')
 				.setColor(ModmailColors.Send);
 
-			const serverModmailEmbed = baseModmailEmbed //
+			const serverModmailEmbed = new EmbedBuilder() //
+				.setTitle('Modmail Started')
 				.setDescription(`New modmail from ${userMention(user.id)}`)
 				.setColor(ModmailColors.Receive);
 
