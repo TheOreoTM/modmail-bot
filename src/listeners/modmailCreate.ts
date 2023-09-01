@@ -20,6 +20,7 @@ export class UserEvent extends Listener {
 		}
 
 		let firstTime = !(await modmailManager.existsFor(message.author.id));
+		console.log('🚀 ~ file: modmailCreate.ts:23 ~ UserEvent ~ overriderun ~ firstTime:', firstTime);
 
 		if (shouldCreateChannel) {
 			const data: ModmailTransmission = {
