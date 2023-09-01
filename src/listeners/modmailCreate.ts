@@ -24,7 +24,7 @@ export class UserEvent extends Listener {
 		if (shouldCreateChannel) {
 			const data: ModmailTransmission = {
 				channel: message.channel as TextChannel,
-				direction: ModmailDirection.ToUser,
+				direction: ModmailDirection.ToServer,
 				firstTime: false,
 				modmail: (await modmailManager.get({ channelId: message.channelId }))!
 			};
