@@ -7,21 +7,11 @@ import { ModmailTransmission } from '#lib/types';
 @ApplyOptions<Listener.Options>({ event: AssistantEvents.ModmailMessageCreate })
 export class UserEvent extends Listener {
 	public override run(message: Message, data: ModmailTransmission) {
-		const { direction, firstTime, channel } = data;
+		const { direction, channel } = data;
 
 		if (direction !== ModmailDirection.ToServer) return;
 
 		const toServerEmbed = new EmbedBuilder();
-
-		if (firstTime) {
-			const embed = new EmbedBuilder();
-			embed.setTitle('Modmail recieved').addFields({
-				name: 'User',
-				value: `<@${message.author.id}>`
-			});
-
-			channel.send({ embeds: [embed] });
-		}
 
 		toServerEmbed
 			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL({ forceStatic: true }) })
