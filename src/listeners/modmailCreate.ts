@@ -11,7 +11,7 @@ export class UserEvent extends Listener {
 	public override async run(message: Message) {
 		const user = message.author;
 		const ModmailManager = new Modmail();
-		let isFirstTime = await ModmailManager.existsFor(user.id);
+		let isFirstTime = !(await ModmailManager.existsFor(user.id));
 		const modmail = await ModmailManager.get({ userId: user.id });
 		if (!modmail) isFirstTime = true;
 
