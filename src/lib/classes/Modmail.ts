@@ -161,9 +161,10 @@ export class Modmail {
 		if (!channel) {
 			const user = await fetchUser(modmailData.userId);
 			const channel = (await this.createChannel({ user, modmail: modmailData })) as TextChannel;
+			await this.setChannel(modmailData.id, channel.id);
 
 			const serverModmailEmbed = new EmbedBuilder() //
-				.setTitle('Modmail Continues')
+				.setTitle('Modmail Continued')
 				.setDescription(
 					`Modmail from ${userMention(
 						user.id
