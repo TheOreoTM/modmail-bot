@@ -30,7 +30,7 @@ export class UserEvent extends Listener {
 				.setDescription(`New modmail from ${userMention(user.id)}`)
 				.setColor(ModmailColors.Receive);
 
-			user.send({ embeds: [userModmailEmbed] });
+			await user.send({ embeds: [userModmailEmbed], content: 'uwuu' });
 			const msg = await channel.send({ embeds: [serverModmailEmbed] });
 			if (msg.pinnable) msg.pin();
 
