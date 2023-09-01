@@ -1,6 +1,6 @@
 import { ModmailConfig } from '#lib/constants';
 import { ModmailData } from '#lib/types';
-import { fetchMainServer, fetchModmailCategory } from '#lib/utils';
+import { fetchMainServer, fetchModmailCategory, fetchUser } from '#lib/utils';
 import { ModmailStatus } from '@prisma/client';
 import { UserError, container } from '@sapphire/framework';
 import { ChannelType, PermissionFlagsBits, TextChannel, User } from 'discord.js';
@@ -158,7 +158,12 @@ export class Modmail {
 
 		const channel = container.client.channels.cache.get(channelId) ?? (await container.client.channels.fetch(channelId).catch(() => null));
 
-		if (!channel) throw new UserError({ message: 'Modmail channel doesnt exist', identifier: 'NoModmailChannel' });
+		if (!channel) {
+			const user = await fetchUser(modmailData.userId);
+			const channel = await this.createChannel({ user, modmail: modmailData });
+
+			return channel as TextChannel;
+		}
 
 		return channel as TextChannel;
 	}
