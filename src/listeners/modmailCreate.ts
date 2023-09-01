@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { AssistantEvents, ModmailColors, ModmailDirection } from '#constants';
-import { EmbedBuilder, Message, userMention } from 'discord.js';
+import { EmbedBuilder, Message, TextChannel, userMention } from 'discord.js';
 import { Modmail } from '#classes/Modmail';
 import { ModmailTransmission } from '#lib/types';
 import { isDMChannel } from '@sapphire/discord.js-utilities';
@@ -47,7 +47,7 @@ export class UserEvent extends Listener {
 		const isDM = isDMChannel(message.channel);
 		let modmailChannel = await ModmailManager.getChannel(modmail.id);
 
-		if (!modmailChannel) {
+		if (!(modmailChannel instanceof TextChannel)) {
 			modmailChannel = await ModmailManager.createChannel({ user, modmail });
 		}
 
