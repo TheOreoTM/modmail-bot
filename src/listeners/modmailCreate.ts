@@ -26,7 +26,7 @@ export class UserEvent extends Listener {
 			const data: ModmailTransmission = {
 				channel: message.channel as TextChannel,
 				direction: ModmailDirection.ToServer,
-				firstTime: false,
+				firstTime: firstTime,
 				modmail: (await modmailManager.get({ channelId: message.channelId }))!
 			};
 			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
