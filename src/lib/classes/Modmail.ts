@@ -169,7 +169,7 @@ export class Modmail {
 				.setDescription(
 					`Modmail from ${userMention(
 						user.id
-					)}. \nThis channel was previously deleted without running the \`delete\`, so i created a new channnel`
+					)}. \nThis channel was previously deleted without running the \`delete\` command, so i created a new channnel`
 				)
 				.setColor(ModmailColors.Receive);
 

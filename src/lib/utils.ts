@@ -12,6 +12,8 @@ import { AssistantColors, AssistantEmojis, ModmailColors, ModmailConfig, Modmail
 import { Nullish } from '@sapphire/utilities';
 import { ModmailStatus } from '@prisma/client';
 
+export const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export async function sendStateEmbed(target: TextChannel | User, state: ModmailStatus) {
 	target.send({
 		embeds: [
