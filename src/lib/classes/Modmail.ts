@@ -18,12 +18,14 @@ export class Modmail {
 		return modmailData;
 	}
 
-	public async get({ userId, channelId }: GetModmailInput, state: ModmailStatus = 'ONGOING') {
+	public async get({ userId, channelId }: GetModmailInput, states: ModmailStatus[] = ['ONGOING', 'CLOSED']) {
 		if (userId) {
 			return await container.db.modmail.findFirst({
 				where: {
 					userId,
-					status: state
+					status: {
+						in: states
+					}
 				}
 			});
 		}
@@ -157,7 +159,6 @@ export class Modmail {
 		if (!channelId) throw new UserError({ message: 'Modmail channel doesnt exist', identifier: 'NoModmailChannel' });
 
 		const channel = container.client.channels.cache.get(channelId) ?? (await container.client.channels.fetch(channelId).catch(() => null));
-		console.log(channel);
 
 		if (!channel) {
 			const user = await fetchUser(modmailData.userId);
