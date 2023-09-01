@@ -1,9 +1,9 @@
-import { ModmailConfig } from '#lib/constants';
+import { ModmailColors, ModmailConfig } from '#lib/constants';
 import { ModmailData } from '#lib/types';
 import { fetchMainServer, fetchModmailCategory, fetchUser } from '#lib/utils';
 import { ModmailStatus } from '@prisma/client';
 import { UserError, container } from '@sapphire/framework';
-import { ChannelType, PermissionFlagsBits, TextChannel, User } from 'discord.js';
+import { ChannelType, EmbedBuilder, PermissionFlagsBits, TextChannel, User, userMention } from 'discord.js';
 
 export class Modmail {
 	public async create({ userId, channelId }: { userId: string; channelId?: string }) {
@@ -160,9 +160,20 @@ export class Modmail {
 
 		if (!channel) {
 			const user = await fetchUser(modmailData.userId);
-			const channel = await this.createChannel({ user, modmail: modmailData });
+			const channel = (await this.createChannel({ user, modmail: modmailData })) as TextChannel;
 
-			return channel as TextChannel;
+			const serverModmailEmbed = new EmbedBuilder() //
+				.setTitle('Modmail Continues')
+				.setDescription(
+					`Modmail from ${userMention(
+						user.id
+					)}. \nThis channel was previously deleted without running the \`delete\`, so i created a new channnel`
+				)
+				.setColor(ModmailColors.Receive);
+
+			channel.send({
+				embeds: [serverModmailEmbed]
+			});
 		}
 
 		return channel as TextChannel;
