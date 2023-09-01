@@ -23,11 +23,16 @@ export class UserEvent extends Listener {
 		console.log('🚀 ~ file: modmailCreate.ts:23 ~ UserEvent ~ overriderun ~ firstTime:', firstTime);
 
 		if (shouldCreateChannel) {
+			const channel = await modmailManager.getChannel((await modmailManager.get({ userId: message.author.id }))!.id).catch(async () => {
+				const channel = await modmailManager.createChannel({ user: message.author, modmail: modmail! });
+				return await modmailManager.setChannel(modmail.id, channel.id);
+			});
+
 			const data: ModmailTransmission = {
 				channel: message.channel as TextChannel,
 				direction: ModmailDirection.ToServer,
 				firstTime: firstTime,
-				modmail: (await modmailManager.get({ channelId: message.channelId }))!
+				modmail: (await modmailManager.get({ channelId: channel.id }))!
 			};
 			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
 		}
