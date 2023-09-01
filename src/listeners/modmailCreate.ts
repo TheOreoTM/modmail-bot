@@ -30,11 +30,18 @@ export class UserEvent extends Listener {
 				.setDescription(`New modmail from ${userMention(user.id)}`)
 				.setColor(ModmailColors.Receive);
 
-			await user.send({ embeds: [userModmailEmbed], content: 'uwuu' });
+			await user.send({ embeds: [userModmailEmbed] });
 			const msg = await channel.send({ embeds: [serverModmailEmbed] });
 			if (msg.pinnable) msg.pin();
 
-			return;
+			const data: ModmailTransmission = {
+				channel: channel,
+				direction: ModmailDirection.ToServer, // Bc this is a DM
+				firstTime: isFirstTime,
+				modmail: modmail
+			};
+
+			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
 		}
 
 		const isDM = isDMChannel(message.channel);
@@ -51,6 +58,6 @@ export class UserEvent extends Listener {
 			modmail: modmail
 		};
 
-		this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
+		return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
 	}
 }
