@@ -156,7 +156,7 @@ export class Modmail {
 
 		if (!channelId) throw new UserError({ message: 'Modmail channel doesnt exist', identifier: 'NoModmailChannel' });
 
-		const channel = container.client.channels.cache.get(channelId) ?? (await container.client.channels.fetch(channelId));
+		const channel = container.client.channels.cache.get(channelId) ?? (await container.client.channels.fetch(channelId).catch(() => null));
 
 		if (!channel) throw new UserError({ message: 'Modmail channel doesnt exist', identifier: 'NoModmailChannel' });
 
