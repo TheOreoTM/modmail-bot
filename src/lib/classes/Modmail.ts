@@ -174,6 +174,8 @@ export class Modmail {
 			channel.send({
 				embeds: [serverModmailEmbed]
 			});
+
+			return channel;
 		}
 
 		return channel as TextChannel;
