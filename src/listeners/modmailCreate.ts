@@ -14,8 +14,9 @@ export class UserEvent extends Listener {
 		let isFirstTime = !(await ModmailManager.existsFor(user.id));
 		const modmail = await ModmailManager.get({ userId: user.id });
 		if (!modmail) isFirstTime = true;
+		const isDM = isDMChannel(message.channel);
 
-		if (isFirstTime || !modmail) {
+		if (isFirstTime || !modmail || isDM) {
 			const modmail = await ModmailManager.create({ userId: user.id });
 			const channel = await ModmailManager.createChannel({ user: user, modmail: modmail });
 			await ModmailManager.setChannel(modmail.id, channel.id);
@@ -43,8 +44,6 @@ export class UserEvent extends Listener {
 
 			return this.container.client.emit(AssistantEvents.ModmailMessageCreate, message, data);
 		}
-
-		const isDM = isDMChannel(message.channel);
 		let modmailChannel = await ModmailManager.getChannel(modmail.id);
 
 		const data: ModmailTransmission = {
