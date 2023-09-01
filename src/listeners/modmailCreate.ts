@@ -38,7 +38,11 @@ export class UserEvent extends Listener {
 		}
 
 		const isDM = isDMChannel(message.channel);
-		const modmailChannel = await ModmailManager.getChannel(modmail.id);
+		let modmailChannel = await ModmailManager.getChannel(modmail.id);
+
+		if (!modmailChannel) {
+			modmailChannel = await ModmailManager.createChannel({ user, modmail });
+		}
 
 		const data: ModmailTransmission = {
 			channel: modmailChannel,
