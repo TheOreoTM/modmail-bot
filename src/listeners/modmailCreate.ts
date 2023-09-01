@@ -16,6 +16,7 @@ export class UserEvent extends Listener {
 		if (!modmail) isFirstTime = true;
 		const isDM = isDMChannel(message.channel);
 		const shouldCreateChannel = ((isFirstTime || !modmail) && isDM) || !modmail;
+		console.log('🚀 ~ file: modmailCreate.ts:19 ~ UserEvent ~ overriderun ~ shouldCreateChannel:', shouldCreateChannel);
 
 		if (shouldCreateChannel) {
 			const modmail = await ModmailManager.create({ userId: user.id });

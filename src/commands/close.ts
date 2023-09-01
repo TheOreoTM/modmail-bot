@@ -26,8 +26,6 @@ export class UserCommand extends Command {
 			? await modmailManager.get({ userId: message.channelId })
 			: await modmailManager.get({ channelId: message.channel.id }, 'CLOSED');
 
-		console.log(modmail);
-
 		if (modmail && modmail.status && modmail.status === 'CLOSED') {
 			return sendFailEmbed(message, `This modmail is already closed`);
 		}
